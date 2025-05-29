@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Temperature Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      text-align: center;
+      padding: 50px;
+    }
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      font-size: 16px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Temperature Calculator</h2>
+    <input type="number" id="tempInput" placeholder="Enter temperature" />
+    <select id="unitFrom">
+      <option value="C">Celsius</option>
+      <option value="F">Fahrenheit</option>
+      <option value="K">Kelvin</option>
+    </select>
+    <select id="unitTo">
+      <option value="C">Celsius</option>
+      <option value="F">Fahrenheit</option>
+      <option value="K">Kelvin</option>
+    </select>
+    <button onclick="convertTemp()">Convert</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function convertTemp() {
+      const temp = parseFloat(document.getElementById('tempInput').value);
+      const from = document.getElementById('unitFrom').value;
+      const to = document.getElementById('unitTo').value;
+      let result;
+
+      if (isNaN(temp)) {
+        result = "Please enter a valid number.";
+      } else {
+        if (from === to) {
+          result = `${temp}°${to}`;
+        } else {
+          switch (from + to) {
+            case 'CF':
+              result = `${(temp * 9/5 + 32).toFixed(2)}°F`;
+              break;
+            case 'CK':
+              result = `${(temp + 273.15).toFixed(2)}K`;
+              break;
+            case 'FC':
+              result = `${((temp - 32) * 5/9).toFixed(2)}°C`;
+              break;
+            case 'FK':
+              result = `${(((temp - 32) * 5/9) + 273.15).toFixed(2)}K`;
+              break;
+            case 'KC':
+              result = `${(temp - 273.15).toFixed(2)}°C`;
+              break;
+            case 'KF':
+              result = `${((temp - 273.15) * 9/5 + 32).toFixed(2)}°F`;
+              break;
+            default:
+              result = "Invalid conversion.";
+          }
+        }
+      }
+
+      document.getElementById('result').innerText = result;
+    }
+  </script>
+</body>
+</html>
